@@ -1,0 +1,10 @@
+<script setup lang="ts">
+import MainNav from '../components/MainNav.vue'
+</script>
+
+<template>
+  <MainNav></MainNav>
+  <p>
+    ТЕСТОВАЯ СТРАНИЦА
+  </p>
+</template>
