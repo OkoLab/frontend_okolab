@@ -3,6 +3,7 @@
   "include": ["src/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules", ".vscode"], 
    "compilerOptions": {
+    "module": "es2022",
     "moduleResolution": "node",
 // "target": "es2017",
     //"module": "commonjs",
@@ -26,7 +27,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["node", "vite/client"]
   }
 }
 

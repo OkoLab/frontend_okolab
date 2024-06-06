@@ -14,7 +14,6 @@ const routes = [
     name: 'registration',
     component: RegistrationComponent
   },
-  { path: '/logout', name: 'logout', component: () => import('../pages/LogoutComponent.vue') },
   {
     path: '/home',
     name: 'home',

@@ -1,6 +1,7 @@
 import { reactive, computed, ref } from 'vue'
 import { useAxios } from './useAxios'
 import { useRouter } from 'vue-router'
+import { AxiosResponse } from "axios";
 
 // https://www.youtube.com/watch?v=v-CEB3dhZcs&list=PLh-F6-XbduO-y5EeMsugjX9zgTmGcCXL_&index=10
 
@@ -26,12 +27,12 @@ export const useAuth = () => {
     state.user = user
   }
 
-  const attemped = async (): Promise<AxiosResponce<any>> => {
+  const attemped = async (): Promise<AxiosResponse<any>> => {
     try {
-      const responce: AxiosResponce<any> = await axiosInstance.get('/user')
+      const response: AxiosResponse<any> = await axiosInstance.get('/user')
       setAuthenticated(true)
-      setUser(responce.data)
-      return responce
+      setUser(response.data)
+      return response
     } catch (error) {
       setAuthenticated(false)
       setUser({})
