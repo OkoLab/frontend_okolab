@@ -42,10 +42,11 @@ export const useAuth = () => {
   const login = async (payload): Promise<any> => {
     try {
       const api_url = import.meta.env.VITE_API_URL
-      await axiosInstance.get('/sanctum/csrf-cookie', { baseURL: api_url })
-      await axiosInstance.post('/login', payload)
-      await attemped()
-      await router.push({ name: 'home' })
+      axiosInstance.get('/sanctum/csrf-cookie', { baseURL: api_url }).then(async() => {
+        await axiosInstance.post('/login', payload)
+        await attemped()
+        await router.push({ name: 'home' })
+      });
     } catch (err) {
       if (err.response.status === 422) {
         errors.value = err.response.data.errors
