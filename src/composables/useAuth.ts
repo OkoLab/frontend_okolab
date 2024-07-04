@@ -44,8 +44,8 @@ export const useAuth = () => {
       const api_url = import.meta.env.VITE_API_URL
       axiosInstance.get('/sanctum/csrf-cookie', { baseURL: api_url }).then(async() => {
         await axiosInstance.post('/login', payload)
-        await attemped()
-        await router.push({ name: 'home' })
+        //await attemped()
+        //await router.push({ name: 'home' })
       });
     } catch (err) {
       if (err.response.status === 422) {
