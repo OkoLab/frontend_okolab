@@ -21,7 +21,7 @@ import Home from '../layouts/TheHome.vue'
 
 const routes = [
   {
-    path: '/login',
+    path: '/',
     name: 'login',
     component: LoginComponent,
     //beforeEnter: [checkIfAuthenticated]
@@ -33,7 +33,7 @@ const routes = [
     //beforeEnter: [checkIfAuthenticated]
   },
   {
-    path: '/',
+    path: '/home',
     name: 'home',
     component: Home,
     //beforeEnter: [checkIfRequiresAuth]

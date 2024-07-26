@@ -7,7 +7,9 @@ const user = ref()
 
 const getUser = async () => {
   try {
-    axios.get('/user').then((res) => {
+    await axios.get('/user').then((res) => {
+      console.log('dsadsadsadsa')
+      console.log(res.data)
       user.value = res.data
     })
   } catch (error) {
