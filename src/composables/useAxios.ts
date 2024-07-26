@@ -9,7 +9,7 @@ export const useAxios = () => {
     axiosInstance = axios.create({
       baseURL: api_url + '/api',
       headers: {
-        'X-Requested-With': 'XMLHttpRequest',
+        //'X-Requested-With': 'XMLHttpRequest',
         'Content-Type': 'application/json',
         Accept: 'application/json'
       },
