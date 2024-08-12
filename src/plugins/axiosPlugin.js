@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useAuth } from '@/composables/useAuth'
 
 const axiosPlugin = {
   install() {
@@ -8,6 +9,19 @@ const axiosPlugin = {
     axios.defaults.headers.common['Accept'] = 'application/json'
     axios.defaults.withCredentials = true
     axios.defaults.withXSRFToken = true
+
+    // https://vueschool.io/lessons/use-axios-intereptors-to-redirect-to-login-page-on-401-unauthorized-response
+    axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if ((error.response.status === 401 || error.response.status === 419) && !error.request.responseURL.endsWith('/api/user')) {
+          const { logout } = useAuth()
+          logout()
+        } else {
+          return Promise.reject(error)
+        }
+      }
+    )
 
     const $getCsrfCookie = async function () {
       try {

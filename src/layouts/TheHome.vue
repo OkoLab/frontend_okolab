@@ -1,23 +1,8 @@
 <script setup>
-import axios from 'axios'
-import { ref } from 'vue'
 import MainNav from './MainNav.vue';
+import { useAuth } from '../composables/useAuth'
 
-const user = ref()
-
-const getUser = async () => {
-  try {
-    await axios.get('/user').then((res) => {
-      console.log('dsadsadsadsa')
-      console.log(res.data)
-      user.value = res.data
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-getUser()
+const { user } = useAuth()
 
 </script>
 <template>

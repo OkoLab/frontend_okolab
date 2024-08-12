@@ -1,53 +1,21 @@
 <script setup lang="ts">
+import { useAuth } from '@/composables/useAuth';
 import { ref } from 'vue'
-import axios from 'axios'
-import { useRouter } from 'vue-router'
 
-//const store = AuthStore()
-
-const form = ref({
+const form = ref({  
   email: null,
   password: null
 })
 
-const router = useRouter()
+const { login } = useAuth();
 
-const login = async () => {
-  try {
-    await axios.post('/login', form.value)
-    //let response = await axios.get('/user')
-    //console.log(response) 
-    router.push({ name: 'home' })
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-//store.clearErrors()
-// for spinner
-// form.loading = true
-
-// try {
-//   // TODO don't fogot change to env const url
-//   const response = await axios.post(`http://localhost/api/login`, form.value)
-//   if (response.data.error) {
-//     console.log(response.data.message)
-//   } else {
-//     store.setToken(response.data.token)
-//     store.setUser(response.data.user)
-//     console.log(response.data.message)
-//     router.push('/')
-//   }
-// } catch (error) {
-//   store.setErrors(error.response.data.errors)
-// }
 </script>
 
 <template>
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
     <!-- <validation-errors :errors="store.errors"></validation-errors> -->
 
-    <form @submit.prevent="login()">
+    <form @submit.prevent="login(form)">
       <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
         >Email address</label
       >

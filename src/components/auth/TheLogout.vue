@@ -1,17 +1,11 @@
 <script setup>
-    import axios from 'axios'
-    import { useRouter } from 'vue-router';
-
-    const router = useRouter()
-
-    const logout = async () =>{
-        await axios.post('/logout')
-        router.push({ name: 'login' })      
-    }
-
-    logout()
- </script>
+import { useAuth } from '@/composables/useAuth'
+const { logout } = useAuth()
+logout()
+</script>
 
 <template>
-    <div>Logging Out...</div>
+    <div>
+    
+        Logging Out...</div>
 </template>
