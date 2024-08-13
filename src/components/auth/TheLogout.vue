@@ -5,7 +5,5 @@ logout()
 </script>
 
 <template>
-    <div>
-    
-        Logging Out...</div>
+  <div>Logging Out...</div>
 </template>
