@@ -1,6 +1,6 @@
 {
   // Change this to match your project
-  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "include": ["src/**/*.ts", "tests/**/*.ts", "src/types/interfaces.js"],
   "exclude": ["node_modules", ".vscode"], 
    "compilerOptions": {
     "module": "es2022",

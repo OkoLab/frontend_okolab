@@ -1,30 +1,18 @@
 import axios from 'axios'
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { User } from '@/types/interfaces'
+import { LoginPayload } from '@/types/interfaces.ts'
+import { useUserStore } from '@/stores/AuthStore.ts'
 
-interface User {
-  email: string
-  email_verified_at?: Date
-  id: number
-  name: string
-  two_factor_confirmed_at?: Date
-  two_factor_recovery_codes?: number
-  two_factor_secret?: string
-  updated_at: Date
-  created_at: Date
-}
 
-const user = ref<User | null>(null)
+//const store = ref < User | null > (null)
 
 export const useAuth = () => {
 
-  interface LoginPayload {
-    email: string
-    password: string
-  }
+  const store = useUserStore()
 
   async function getUser(): Promise<User | null> {
-    if(user.value) return user.value
+    if(store.user) return store.user
 
     try {
       const res = await axios.get('/user')
@@ -37,7 +25,9 @@ export const useAuth = () => {
   }
 
   async function initUser() {
-    user.value = await getUser()
+    const _user = await getUser()
+    store.setUser(_user)
+    //user.value = await getUser()
   }
 
   const router = useRouter()
@@ -53,9 +43,10 @@ export const useAuth = () => {
 
   const logout = async () => {
     await axios.post('/logout')
-    user.value = null
+    //user.value = null
+    store.clearStoreData()
     router.push({ name: 'login' })
   }
 
-  return { login, logout, initUser, user }
+  return { login, logout, initUser }
 }
