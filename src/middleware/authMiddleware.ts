@@ -9,6 +9,8 @@ export const authMiddleware = async () => {
     const { initUser } = useAuth()
     await initUser()
 
+    console.log(store.user)
+
     if (!store.user) {
       router.push({ name: 'login' })
     }

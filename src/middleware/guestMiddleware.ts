@@ -9,7 +9,8 @@ export const guestMiddleware = async () => {
     const store = useUserStore()
     //const { user } = useAuth()
 
-    if (user.value) {
+    //if (user.value) {
+    if(store.user) {
       router.push({ name: 'home' })
     }
 }
