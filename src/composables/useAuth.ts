@@ -4,19 +4,19 @@ import { User } from '@/types/interfaces'
 import { LoginPayload } from '@/types/interfaces.ts'
 import { useUserStore } from '@/stores/AuthStore.ts'
 
-
-//const store = ref < User | null > (null)
-
 export const useAuth = () => {
 
-  const store = useUserStore()
+  const store = useUserStore();
+  //const { store.user } = storeToRefs(store);
 
-  async function getUser(): Promise<User | null> {
+  async function getUser(): User | null {
+    console.log('getUser')
+    console.log(store.user)
     if(store.user) return store.user
 
     try {
       const res = await axios.get('/user')
-      const user = res.data
+      const user = res.data['message']
       return user
     } catch (error) {
       console.log(error)
@@ -27,7 +27,8 @@ export const useAuth = () => {
   async function initUser() {
     const _user = await getUser()
     store.setUser(_user)
-    //user.value = await getUser()
+    console.log('initUser')
+    console.log(store.user);
   }
 
   const router = useRouter()
@@ -43,8 +44,8 @@ export const useAuth = () => {
 
   const logout = async () => {
     await axios.post('/logout')
-    //user.value = null
-    store.clearStoreData()
+    //store.clearStoreData()
+    store.$reset()
     router.push({ name: 'login' })
   }
 

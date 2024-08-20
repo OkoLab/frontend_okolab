@@ -1,46 +1,32 @@
 import { defineStore } from 'pinia'
 import { User } from '../types/interfaces'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
-export const useUserStore = defineStore('auth', () => {
-  const user = ref < User | null > (null)
+//const _user = ref < User | null > (null);
 
-  function setUser(user) {
-    user.value = user
+export const useUserStore = defineStore('auth', {
+  state: () => {
+    return {
+      user: null as User | null,
+    }
+  },
+  actions: {
+    setUser(newUser) {
+      this.user = newUser
+    },
   }
 
-  function clearStoreData() {
-    user.value = null
-  }
+  //const user = ref < User | null > (null);
 
-  //const user: Ref<User | null> = ref(null)
-  return { user, setUser, clearStoreData }
+  // const user = computed(() => _user.value)
+
+  // function setUser(newUser) {
+  //   _user.value = newUser
+  // }
+
+  // function clearStoreData() {
+  //   _user.value = null
+  // }
+
+  // return { user, setUser, clearStoreData }
 })
-
-// export const useUserStore = defineStore('auth', {
-//     state: () => ({
-//         user: User | null,
-//       }),
-
-//     // state: () => ({
-//     //     user: ref<User | null>>
-//     //     //errors: null,
-//     // }),
-//     getters: {
-//         getUser: (state) => state.user
-//     },
-//     actions: {
-//         setUser (user) {
-//             this.user = user
-//         },
-//         // setErrors (errors) {
-//         //     this.errors = errors
-//         // },
-//         clearStoreData() {
-//             this.user = null
-//         },
-//         // clearErrors() {
-//         //     this.errors = null
-//         // }
-//     }
-// })
