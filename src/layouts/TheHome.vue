@@ -1,10 +1,10 @@
 <script setup>
 import MainNav from './MainNav.vue';
 //import { useAuth } from '../composables/useAuth'
-import { useUserStore } from '../stores/AuthStore'
+import { useAuthStore } from '../stores/AuthStore'
 
 //const { user } = useAuth()
-  const store = useUserStore()
+  const store = useAuthStore()
 
 </script>
 <template>
