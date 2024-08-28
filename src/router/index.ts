@@ -54,3 +54,6 @@ router.beforeEach((to, from, next) => {
 });
 
 export default router
+
+// TODO: 23/08/2024- Check how to work app when session finished
+

@@ -4,10 +4,10 @@ import { User } from '@/types/interfaces'
 import { LoginPayload } from '@/types/interfaces.ts'
 import { useAuthStore } from '@/stores/AuthStore.ts'
 
-export const useAuth = () => {
+export const useAuth = (router = null) => {
 
-  const authStore = useAuthStore();
-  //const { store.user } = storeToRefs(store);
+  const authStore = useAuthStore()
+  if (!router) router = useRouter()
 
   async function getUser(): User | null {
     if(authStore.user) return authStore.user
@@ -24,18 +24,13 @@ export const useAuth = () => {
 
   async function initUser() {
     const _user = await getUser()
-    authStore.setUser(_user)
-    // console.log('initUser')
-    // console.log(authStore);
+    authStore.setUser(_user)    
   }
-
-  const router = useRouter()
 
   const login = async (payload: LoginPayload) => {
     try {
       await axios.post('/login', payload)
       await initUser();
-      //localStorage.setItem('isAuthenticated', 'true');
       router.push({ name: 'home' })
     } catch (error) {
       console.log(error)
@@ -45,8 +40,6 @@ export const useAuth = () => {
   const logout = async () => {
     await axios.post('/logout')
     authStore.clearStoreData()
-    //localStorage.setItem('isAuthenticated', 'false');
-    //store.$reset()
     router.push({ name: 'login' })
   }
 

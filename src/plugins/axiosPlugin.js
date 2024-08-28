@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useAuth } from '@/composables/useAuth'
 
 const axiosPlugin = {
-  install() {
+  install(Vue, options) {
     axios.defaults.baseURL = import.meta.env.VITE_API_URL + '/api'
     axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
     axios.defaults.headers.common['Content-Type'] = 'application/json'
@@ -12,10 +12,18 @@ const axiosPlugin = {
 
     // https://vueschool.io/lessons/use-axios-intereptors-to-redirect-to-login-page-on-401-unauthorized-response
     axios.interceptors.response.use(
-      (response) => response,
+      (response) => {
+        return response
+      },
       (error) => {
-        if ((error.response.status === 401 || error.response.status === 419) && !error.request.responseURL.endsWith('/api/user')) {
-          const { logout } = useAuth()
+        if (
+          (error.response.status === 401 || error.response.status === 419) &&
+          !error.request.responseURL.endsWith('/api/user')
+        ) {
+
+          // TODO: костыль. при вызове logout теряется объект router в composable функции. поэтому передаем его в useAuth 
+          const { router } = options 
+          const { logout } = useAuth(router)
           logout()
         } else {
           return Promise.reject(error)

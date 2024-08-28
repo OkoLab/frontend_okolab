@@ -8,7 +8,7 @@ import axiosPlugin from './plugins/axiosPlugin';
 
 const pinia = createPinia()
 const app = createApp(App)
-app.use(axiosPlugin)
+app.use(axiosPlugin, { router })
 app.use(router)
 app.use(pinia)
 app.mount('#app')
