@@ -1,13 +1,12 @@
 import { defineStore } from 'pinia'
-import { User } from '../types/interfaces'
+import { User } from '../types'
 import { ref } from 'vue'
 import { useCacheUser } from '../composables/cache/useUserCache'
 
-//const _user = ref < User | null > (null);
-
 export const useAuthStore = defineStore('auth', () =>{
-  const user = ref < User | null > (null);
-  const { cacheUser, clearUser, loadUser, isAuthenticated } = useCacheUser();
+  const user = ref < User | null > (null)
+  const errors = ref(null)
+  const { cacheUser, clearUser, loadUser, isAuthenticated } = useCacheUser()
 
   if(isAuthenticated) {
     user.value = loadUser()
@@ -20,39 +19,9 @@ export const useAuthStore = defineStore('auth', () =>{
 
   function clearStoreData() {
     user.value = null
+    errors.value = null
     clearUser()
-    //isAuthenticated.value = false
   }
 
-  return { user, setUser, clearStoreData }
-  // state: () => {
-  //   return {
-  //     user: null as User | null,
-  //     isAuthenticated: false as boolean
-  //   }
-  // },
-  // actions: {
-  //   setUser(newUser) {
-  //     this.user = newUser
-  //     this.isAuthenticated = true
-  //   },
-  //   clearStoreData() {
-  //     this.user = null
-  //     this.isAuthenticated = false
-  //   }
-  })
-
-  //const user = ref < User | null > (null);
-
-  // const user = computed(() => _user.value)
-
-  // function setUser(newUser) {
-  //   _user.value = newUser
-  // }
-
-  // function clearStoreData() {
-  //   _user.value = null
-  // }
-
-  // return { user, setUser, clearStoreData }
-// })
+  return { user, errors, setUser, clearStoreData }
+})

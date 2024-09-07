@@ -1,20 +1,19 @@
+<script setup>
+  import { defineProps } from 'vue'
+  const props = defineProps(['errors'])
+  
+</script>
+
 <template>
   <div>
-    <ul v-for="(validationErrors, index) in props.errors" :key="index">
-      <li class="text-red-500" v-for="(error, index) in validationErrors" :key="index">
+    <ul>
+      <li class="text-red-500" v-for="[index, error] of Object.entries(props.errors)" :key="index">
         {{ error }}
       </li>
     </ul>
   </div>
+  <div>
+    cdsvfdsvfdvfd
+    {{ props.errors }}
+  </div>
 </template>
-
-<script setup>
-
-const props = define({
-  errors: {
-    type: Object,
-    required: false,
-    default: null
-  }
-})
-</script>

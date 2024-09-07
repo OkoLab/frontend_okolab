@@ -1,4 +1,4 @@
-import { User} from '@/types/interfaces';
+import { User} from '@/types';
 
 export const useCacheUser = () => {
 

@@ -1,14 +1,19 @@
 <script setup lang="ts">
-import { useAuth } from '@/composables/useAuth';
+import { useAuth } from '@/composables/useAuth'
 import { ref } from 'vue'
+import ValidationErrors from '@/components/custom/ValidationErrors.vue'
+import { useAuthStore } from '../../stores/AuthStore';
+import { storeToRefs } from 'pinia';
 
-const form = ref({  
+const form = ref({
   email: null,
   password: null
 })
 
-const { login } = useAuth();
+const authStore = useAuthStore()
+const { errors } = storeToRefs(authStore)
 
+const { login } = useAuth()
 </script>
 
 <template>
@@ -51,15 +56,21 @@ const { login } = useAuth();
 
         <!-- <div v-if="errors['password']" class="text-red-500">{{ errors['password'][0] }}</div> -->
       </div>
-
       <div>
         <button
           type="submit"
-          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 mt-10 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Login
         </button>
       </div>
     </form>
+    <div class="mt-2" v-if="errors">
+      <ValidationErrors :errors="errors" />
+    </div>
+    <div>
+      Тест
+      {{ errors }}
+    </div>
   </div>
 </template>
