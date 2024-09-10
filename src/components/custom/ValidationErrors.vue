@@ -12,8 +12,4 @@
       </li>
     </ul>
   </div>
-  <div>
-    cdsvfdsvfdvfd
-    {{ props.errors }}
-  </div>
 </template>

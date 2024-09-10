@@ -68,9 +68,5 @@ const { login } = useAuth()
     <div class="mt-2" v-if="errors">
       <ValidationErrors :errors="errors" />
     </div>
-    <div>
-      Тест
-      {{ errors }}
-    </div>
   </div>
 </template>
