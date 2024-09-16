@@ -2,10 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginComponent from '../components/auth/TheLogin.vue'
 import LogoutComponent from '../components/auth/TheLogout.vue'
 import Home from '../layouts/TheHome.vue'
-import { useAuthStore } from '../stores/AuthStore'
-//import { authMiddleware } from '../middleware/authMiddleware';
-//import { guestMiddleware } from '../middleware/guestMiddleware';
-import { useCacheUser } from '../composables/cache/useUserCache';
+import { useAuth } from '../composables/useAuth';
 
 const routes = [
   {
@@ -39,17 +36,13 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
-router.beforeEach((to, from, next) => {
-  const { isAuthenticated } = useCacheUser();
-  //const isAuthenticated = isAuthenticated();
-  
-  //const authStore = useAuthStore();
-  if (to.name !== 'login' && !isAuthenticated) {
-    next({ name: 'login' })
-  } else if(to.name === 'login' && isAuthenticated) {
-    next({ name: 'home' })
+router.beforeEach(async (to, from, next) => {
+  const { user, initUser } = useAuth();
+  await initUser();
+  if(!user.value && to.name !== 'login') {
+    next({ name: 'login' }) ;
   } else {
-    next();
+    next()
   }
 });
 

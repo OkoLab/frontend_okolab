@@ -1,3 +1,10 @@
+<script setup>
+import MainNav from './layouts/MainNav.vue'
+</script>
+
 <template>
- <router-view></router-view>
+  <div id="app">
+    <MainNav />
+    <router-view />
+  </div>
 </template>

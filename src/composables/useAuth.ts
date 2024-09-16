@@ -1,17 +1,15 @@
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 import type { User, LoginPayload } from '@/types'
-import { useAuthStore } from '@/stores/AuthStore.ts'
-import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
+
+const user = ref<User | null>(null);
 
 export const useAuth = (router = null) => {
-  const authStore = useAuthStore()
-  const { errors } = storeToRefs(authStore)
-
   if (!router) router = useRouter()
 
   async function getUser(): User | null {
-    if (authStore.user) return authStore.user
+    if(user.value) return user.value;
 
     try {
       const res = await axios.get('/user')
@@ -28,8 +26,7 @@ export const useAuth = (router = null) => {
   }
 
   async function initUser() {
-    const _user = await getUser()
-    authStore.setUser(_user)
+    user.value = await getUser()
   }
 
   const login = async (payload: LoginPayload) => {
@@ -49,7 +46,7 @@ export const useAuth = (router = null) => {
   const logout = async () => {
     try {
       await axios.post('/logout')
-      authStore.clearStoreData()
+      user.value = null
       router.push({ name: 'login' })
     } catch (error) {
       if (error.response && error.response.status === 422) {
@@ -60,5 +57,5 @@ export const useAuth = (router = null) => {
     }
   }
 
-  return { login, logout }
+  return { login, logout, initUser, user }
 }
