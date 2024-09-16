@@ -2,28 +2,28 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginComponent from '../components/auth/TheLogin.vue'
 import LogoutComponent from '../components/auth/TheLogout.vue'
 import Home from '../layouts/TheHome.vue'
-import { useAuth } from '../composables/useAuth';
+import { useAuth } from '../composables/useAuth'
 
 const routes = [
   {
     path: '/',
     name: 'login',
-    component: LoginComponent,
+    component: LoginComponent
   },
   {
     path: '/logout',
     name: 'logout',
-    component: LogoutComponent,
+    component: LogoutComponent
   },
   {
     path: '/home',
     name: 'home',
-    component: Home,
+    component: Home
   },
   {
     path: '/link',
     name: 'link',
-    component: () => import('../pages/LinkComponent.vue'),
+    component: () => import('../pages/LinkComponent.vue')
   },
   {
     path: '/stock',
@@ -37,16 +37,24 @@ const router = createRouter({
   routes
 })
 router.beforeEach(async (to, from, next) => {
-  const { user, initUser } = useAuth();
-  await initUser();
-  if(!user.value && to.name !== 'login') {
-    next({ name: 'login' }) ;
-  } else {
-    next()
+  const { user, initUser } = useAuth()
+  await initUser()
+  if (!user.value) {
+    if (to.name !== 'login'){
+      next({ name: 'login' })
+    } else {
+      next()
+    }
   }
-});
+  else {
+    if (to.name === 'login') {
+      next({ name: 'home' })
+    } else {
+      next()
+    }
+  }
+})
 
 export default router
 
 // TODO: 23/08/2024- Check how to work app when session finished
-
