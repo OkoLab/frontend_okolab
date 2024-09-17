@@ -2,16 +2,13 @@
 import { useAuth } from '@/composables/useAuth'
 import { ref } from 'vue'
 import ValidationErrors from '@/components/custom/ValidationErrors.vue'
-import { useAuthStore } from '../../stores/AuthStore';
-import { storeToRefs } from 'pinia';
 
 const form = ref({
   email: null,
   password: null
 })
 
-const authStore = useAuthStore()
-const { errors } = storeToRefs(authStore)
+//const { errors } = storeToRefs(authStore)
 
 const { login } = useAuth()
 </script>
@@ -65,8 +62,8 @@ const { login } = useAuth()
         </button>
       </div>
     </form>
-    <div class="mt-2" v-if="errors">
+    <!-- <div class="mt-2" v-if="errors">
       <ValidationErrors :errors="errors" />
-    </div>
+    </div> -->
   </div>
 </template>
